@@ -77,6 +77,7 @@
 
     <script>
         let randomNumber = Math.floor(Math.random() * 10) + 1;
+        console.log(randomNumber);
         let attempts = 0;
         let level = 1;
 
@@ -104,6 +105,7 @@
                         level++;
                         levelDisplay.textContent = `Level: ${level}`;
                         randomNumber = Math.floor(Math.random() * 10) + 1;
+                        console.log(randomNumber);
                         attempts = 0;
                         attemptsDisplay.textContent = `Attempts: ${attempts}`;
                         document.getElementById('guess-input').value = '';
@@ -124,6 +126,7 @@
             }
         }
     </script>
+
 
 </body>
 </html>
