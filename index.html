@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Number Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #ffeb3b;
+        }
+
+        #game-container {
+            margin: 50px auto;
+            padding: 20px;
+            width: 300px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #result-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+        }
+
+        #attempts {
+            margin-top: 10px;
+        }
+
+        input[type="number"] {
+            width: 80%;
+            padding: 10px;
+            margin: 10px auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        #status {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="game-container">
+        <h1>Guess the Number</h1>
+        <p id="level">Level: 1</p>
+        <img id="result-image" src="image1.jpg" alt="Start Image">
+        <p>Enter a number between 1 and 10:</p>
+        <input type="number" id="guess-input" min="1" max="10">
+        <button onclick="checkGuess()">Submit</button>
+        <p id="attempts">Attempts: 0</p>
+        <p id="status"></p>
+    </div>
+
+    <script>
+        let randomNumber = Math.floor(Math.random() * 10) + 1;
+        let attempts = 0;
+        let level = 1;
+
+        function checkGuess() {
+            const userGuess = parseInt(document.getElementById('guess-input').value);
+            const resultImage = document.getElementById('result-image');
+            const attemptsDisplay = document.getElementById('attempts');
+            const levelDisplay = document.getElementById('level');
+            const statusDisplay = document.getElementById('status');
+
+            attempts++;
+            attemptsDisplay.textContent = `Attempts: ${attempts}`;
+
+            if (userGuess === randomNumber) {
+                resultImage.src = "image2.jpg";
+                resultImage.alt = "Correct Guess Image";
+                statusDisplay.textContent = "Correct!";
+
+                setTimeout(() => {
+                    statusDisplay.textContent = "";
+                }, 1000);
+
+                setTimeout(() => {
+                    if (level < 5) {
+                        level++;
+                        levelDisplay.textContent = `Level: ${level}`;
+                        randomNumber = Math.floor(Math.random() * 10) + 1;
+                        attempts = 0;
+                        attemptsDisplay.textContent = `Attempts: ${attempts}`;
+                        document.getElementById('guess-input').value = '';
+                        resultImage.src = "image1.jpg";
+                    } else {
+                        statusDisplay.textContent = "Congratulations! You completed all levels.";
+                        setTimeout(() => location.reload(), 2000);
+                    }
+                }, 1000);
+            } else {
+                resultImage.src = "image1.jpg";
+                resultImage.alt = "Wrong Guess Image";
+                statusDisplay.textContent = "Try Again!";
+
+                setTimeout(() => {
+                    statusDisplay.textContent = "";
+                }, 1000);
+            }
+        }
+    </script>
+
+</body>
+</html>
